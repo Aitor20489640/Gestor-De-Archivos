@@ -32,22 +32,22 @@ public class Archivo {
         this.archivo = new File(archivo);
     }
 
-    public void cambiarNombre(String nombre) {
+    public boolean cambiarNombre(String nombre) {
         String name, barra = "\\";
         File rename;
 
-        name = archivo.getAbsolutePath();
+        name = archivo.getParent();
         name += barra;
         name += nombre;
         rename = new File(name);
-        archivo.renameTo(rename);
+        return archivo.renameTo(rename);
     }
 
-    public void cambiarNombresSecuencial(String nombre, String ext) {
+    public void cambiarNombresSecuencial(String nombre) {
         File[] lista = archivo.listFiles();
-        int cont = 1;
+        int cont = 1, indexOf;
         File rename;
-        String name, barra = "\\";
+        String name, barra = "\\", ext;
 
         Arrays.sort(lista);
 
@@ -55,28 +55,50 @@ public class Archivo {
 
         System.out.println();
 
-        for (File arch : lista) {
-
-            if (cont < 10) {
-                name = archivo.getAbsolutePath();
-                name += barra;
-                name += nombre;
-                name += cont;
-                name += ext;
-                rename = new File(name);
-                arch.renameTo(rename);
-            } else {
-                name = archivo.getAbsolutePath();
-                name += barra;
-                name += nombre;
-                name += cont;
-                name += ext;
-                rename = new File(name);
-                arch.renameTo(rename);
+        
+            for (File arch : lista) {
+                if (arch.isFile()) {
+                    indexOf = arch.getName().lastIndexOf(".");
+                    ext = arch.getName().substring(indexOf);
+                    if (cont < 10) {
+                        name = archivo.getAbsolutePath();
+                        name += barra;
+                        name += nombre;
+                        name += 0;
+                        name += cont;
+                        name += ext;
+                        rename = new File(name);
+                        arch.renameTo(rename);
+                    } else {
+                        name = archivo.getAbsolutePath();
+                        name += barra;
+                        name += nombre;
+                        name += cont;
+                        name += ext;
+                        rename = new File(name);
+                        arch.renameTo(rename);
+                    }
+                } else if (arch.isDirectory()) {
+                    if (cont < 10) {
+                        name = archivo.getAbsolutePath();
+                        name += barra;
+                        name += nombre;
+                        name += 0;
+                        name += cont;
+                        rename = new File(name);
+                        arch.renameTo(rename);
+                    } else {
+                        name = archivo.getAbsolutePath();
+                        name += barra;
+                        name += nombre;
+                        name += cont;
+                        rename = new File(name);
+                        arch.renameTo(rename);
+                    }
+                }
+                cont++;
             }
-
-            cont++;
-        }
+        
 
         mostrarContenidoCarpeta();
     }
@@ -93,8 +115,6 @@ public class Archivo {
             }
         }
     }
-    
-    
 
     public boolean cambiarNombreEnCarpeta(String aCambiar, String cambiado) {
         String nameACambiar, nameCambiado, barra = "\\";
@@ -120,9 +140,7 @@ public class Archivo {
 
         mv = new File(nombre);
 
-        ok = archivo.renameTo(mv);
-
-        return ok;
+        return archivo.renameTo(mv);
     }
 
     public void moverArchivoSubcarpetaMp4() throws FileNotFoundException {
@@ -145,7 +163,7 @@ public class Archivo {
             borraTodo(arch);
         }
     }
-    
+
     public boolean borrarArchivo() {
         return archivo.delete();
     }
@@ -199,10 +217,23 @@ public class Archivo {
 
         return ok;
     }
-    
-    public static boolean rutaExsiste(String nombre){
+
+    public static boolean rutaExsiste(String nombre) {
         File existe = new File(nombre);
-        
+
         return existe.exists();
+    }
+    
+    public boolean areFiles(){
+        boolean ok = false;
+        File[] vector = archivo.listFiles();
+        
+        for (File arch : vector){
+            if (arch.isFile()){
+                ok = true;
+            }
+        }
+        
+        return ok;
     }
 }
