@@ -6,6 +6,7 @@ package gestordearchivos;
 
 import java.util.Scanner;
 import java.io.FileNotFoundException;
+import java.util.InputMismatchException;
 
 /**
  *
@@ -28,7 +29,7 @@ public class Pricipal {
             if (op == -1) {
                 do {
                     System.out.println("Escriba la ruta absoluta de la carpeta o archivo que quiere gestionar.");
-                    nombre = sc.next();
+                    nombre = sc.nextLine();
                     if (Archivo.rutaExsiste(nombre)) {
                         ruta = new Archivo(nombre);
                         ok = true;
@@ -38,13 +39,19 @@ public class Pricipal {
                 } while (!ok);
             }
             do {
-
+                try{
                 mostrarMenu();
                 System.out.println("Seleccione una opción.");
                 op = sc.nextInt();
-
+                
                 if (op < -1 || op > 9) {
                     System.out.println("Opción no disponible, eliga una opción disponible.");
+                }
+                }
+                catch(InputMismatchException e){
+                    System.err.println("Solo se pueden introducir numeros");
+                    sc.nextLine();
+                    op = -2;
                 }
 
             } while (op < -1 || op > 9);
@@ -53,7 +60,8 @@ public class Pricipal {
                 case 0:
                     do {
                         System.out.println("Escriba la ruta absoluta donde va a gestionar los archivos.");
-                        nombre = sc.next();
+                        sc.nextLine();
+                        nombre = sc.nextLine();
                         if (Archivo.rutaExsiste(nombre)) {
                             ruta.setArchivo(nombre);
                             ok = true;
@@ -73,7 +81,7 @@ public class Pricipal {
                     do {
                         System.out.println("Introduzca el nombre que le quiere poner.");
                         System.out.println("RECUERDA: Si es un archivo introduce la extensión.");
-                        nombre = sc.next();
+                        nombre = sc.nextLine();
                         ok = Utilidades.campoVacio(nombre);
                     } while (!ok);
                     if (ruta.cambiarNombre(nombre)) {
@@ -126,7 +134,7 @@ public class Pricipal {
                     do {
                         System.out.println("Escriba la ruta absoluta donde va a mover el archivo o carpeta.");
                         System.out.println("AVISO: No se puede mover una carpeta con contenidos dentro.");
-                        nombre = sc.next();
+                        nombre = sc.nextLine();
                         ok = Utilidades.campoVacio(nombre);
                         if (ok) {
                             if (Archivo.rutaExsiste(nombre)) {
@@ -154,7 +162,7 @@ public class Pricipal {
                     System.out.println("Estas seguro que quieres borrar este archivo? " + ruta.getArchivo().getName());
                     do {
                         System.out.println("Si/No");
-                        siNo = sc.next();
+                        siNo = sc.nextLine();
                         ok = Utilidades.validarSN(siNo);
                     } while (!ok);
                     if (siNo.equalsIgnoreCase("si")) {
@@ -172,7 +180,7 @@ public class Pricipal {
                     }
                     do {
                         System.out.println("Si/No");
-                        siNo = sc.next();
+                        siNo = sc.nextLine();
                         ok = Utilidades.validarSN(siNo);
                     } while (!ok);
                     if (siNo.equalsIgnoreCase("si")) {
