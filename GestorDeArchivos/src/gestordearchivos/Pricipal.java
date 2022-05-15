@@ -211,7 +211,7 @@ public class Pricipal {
         System.out.println("3 - Cambiar nombre de archivos secuencialmente");
         System.out.println("4 - Cambiar nombre de archivos dentro de una carpeta");
         System.out.println("5 - Mover archivos");
-        System.out.println("6 - Mover archivos mp4 fuera de subcarpeta");
+        System.out.println("6 - Mover archivos mp4 o mkv fuera de subcarpeta");
         System.out.println("7 - Borrar archivo");
         System.out.println("8 - Borrar todo");
         System.out.println("9 - Salir");

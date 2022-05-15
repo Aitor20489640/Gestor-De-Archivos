@@ -152,7 +152,7 @@ public class Archivo {
             if (arch.isDirectory()) {
                 vector2 = arch.listFiles();
                 for (File f : vector2) {
-                    if (f.getName().matches(".*\\.mp4")) {
+                    if (f.getName().matches(".*\\.mp4") || f.getName().matches(".*\\.mkv")) {
                         f.renameTo(new File(archivo.getAbsolutePath() + "\\" + f.getName()));
                     }
                 }
