@@ -162,15 +162,18 @@ public class Pricipal {
                     System.out.println("Estas seguro que quieres borrar este archivo? " + ruta.getArchivo().getName());
                     do {
                         System.out.println("Si/No");
-                        siNo = sc.nextLine();
+                        sc.nextLine();
+                        siNo = sc.next();
                         ok = Utilidades.validarSN(siNo);
                     } while (!ok);
                     if (siNo.equalsIgnoreCase("si")) {
                         ruta.borrarArchivo();
+                        op = -1;
+                        sc.nextLine();
                     } else {
                         System.out.println("Okay, volvemos al menu.");
                     }
-                    op = -1;
+                    
                     break;
                 case 8:
                     if (ruta.getArchivo().isFile()) {
@@ -180,20 +183,23 @@ public class Pricipal {
                     }
                     do {
                         System.out.println("Si/No");
-                        siNo = sc.nextLine();
+                        sc.nextLine();
+                        siNo = sc.next();
                         ok = Utilidades.validarSN(siNo);
                     } while (!ok);
                     if (siNo.equalsIgnoreCase("si")) {
                         ok = ruta.borraTodo();
                         if (ok) {
                             System.out.println("Se ha borrado todo");
+                            op = -1;
+                            sc.nextLine();
                         } else {
                             System.out.println("No se ha conseguido borrar");
                         }
                     } else {
                         System.out.println("Okay, volvemos al menu.");
                     }
-                    op = -1;
+                    
                     break;
                 case 9:
                     System.out.println("Gracias por utilizar el programa.");
